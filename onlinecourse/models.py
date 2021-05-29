@@ -70,9 +70,9 @@ class Course(models.Model):
 
 # Lesson model
 class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, default="title")
     order = models.IntegerField(default=0)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     content = models.TextField()
 
 
@@ -103,8 +103,9 @@ class Enrollment(models.Model):
     # Other fields and methods you would like to design
 class Question(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    #lesson = models.ManyToManyField(Lesson)
     question_text = models.TextField()
-    grade = models.CharField(max_length=50)
+    grade = models.IntegerField()
     # Foreign key to lesson
     # question text
     # question grade/mark
@@ -127,9 +128,9 @@ class Question(models.Model):
     # Other fields and methods you would like to design
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.TextField()
+    choice_text = models.CharField(max_length=100)
     is_correct = models.BooleanField()
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    #course = models.ManyToManyField(Course)
 
 # <HINT> The submission model
     # One enrollment could have multiple submission
