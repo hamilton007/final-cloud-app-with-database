@@ -144,26 +144,37 @@ def show_exam_result(request, course_id, submission_id):
     context={}
     context['course']=course
     context['submission'] = submission_id
+
+    correct_choices = [(c.question.id, c.choice_text) for c in Choice.objects.filter(is_correct=True).all()]
+    
     choices =[]
     for choice in submission.choices.all():
-        if choice.is_true:
+        if choice.is_correct:
             msg='alert-success'
         else:
             msg='alert-danger'
-        choices.append([choice.q.id,choice.c,msg])        
+        choices.append([choice.question.id, choice.id, choice.choice_text, msg]) 
+
     questions = Question.objects.filter(course=course)
     grade=0
     maxgrade=0
-    allquestions=[]
+    allquestions = []
     for question in questions:
         maxgrade+=question.grade
         note=0
         if question.is_get_score(submission.choices.all()):
             note=question.grade
             grade += question.grade
-        allquestions.append([question.id,question.q,note,question.grade])    
-    grade = round(grade/maxgrade)*100
-    context['grade']=grade
-    context['allquestions']=allquestions
-    context['choices']=choices
-    return render(request,'onlinecourse/exam_result_bootstrap.html',context)
+        allquestions.append([question.id, question.question_text, note, question.grade])
+
+    #qeustion_choice_result = []
+    #for i in range(min([q.id for q in questions]), max([q.id for q in questions])+1):   
+    #    result = []
+
+    context['grade'] = grade
+    context["maxgrade"] = maxgrade
+    context["accuracy"] = grade/maxgrade*100
+    context['allquestions'] = allquestions
+    context['choices'] = choices
+    context['correct_choices'] = correct_choices
+    return render(request,'onlinecourse/exam_result_bootstrap.html', context)
