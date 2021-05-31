@@ -1,9 +1,9 @@
   applications:
-  - name: onlinecourse
+  - name: onlinecourse-hamilton007
     random-route: true
     memory: 128M
     buildpack: python_buildpack
-  - name: onlinecourse-nginx
+  - name: onlinecourse-hamilton007-nginx
     random-route: true
     memory: 128M
     buildpack: staticfile_buildpack
