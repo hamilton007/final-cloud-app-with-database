@@ -1,9 +1,11 @@
   applications:
   - name: onlinecourse-hamilton007
-    random-route: true
+    routes:
+      - route: onlinecourse-hamilton007-busy-koala-gc.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
   - name: onlinecourse-hamilton007-nginx
-    random-route: true
+    routes:
+      -route: onlinecourse-hamilton007-busy-koala-gc.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
