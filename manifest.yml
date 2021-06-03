@@ -6,6 +6,6 @@
     buildpack: python_buildpack
   - name: onlinecourse-hamilton007-nginx
     routes:
-      -route: onlinecourse-hamilton007-busy-koala-gc.mybluemix.net/static
+      - route: onlinecourse-hamilton007-busy-koala-gc.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
